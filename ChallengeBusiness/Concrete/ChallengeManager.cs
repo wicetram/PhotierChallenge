@@ -230,15 +230,20 @@ namespace ChallangeWebApi.Business
             var processResult = new CompleteResponseDto();
             try
             {
-                var zippedFileData = File.ReadAllBytes(completeRequestDto.FilePath);
-
-                var request = new RestRequest { Method = Method.Post, AlwaysMultipartFormData = true };
+                var options = new RestClientOptions(BaseUrl)
+                {
+                    MaxTimeout = -1,
+                };
+                var client = new RestClient(options);
+                var request = new RestRequest("/complete")
+                {
+                    Method = Method.Post,
+                    AlwaysMultipartFormData = true
+                };
                 request.AddHeader("Authorization", $"Bearer {Token}");
-                request.AddParameter("Code", completeRequestDto.Code);
-                request.AddFile("File", completeRequestDto.FilePath);
-
-                var client = new RestClient($"{BaseUrl}/complete");
-                var response = client.Execute(request);
+                request.AddParameter("CODE", completeRequestDto.Code);
+                request.AddFile("FILE", completeRequestDto.FilePath);
+                RestResponse response = client.Execute(request);
 
                 if (response.IsSuccessful)
                 {
