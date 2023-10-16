@@ -25,21 +25,21 @@ namespace ChallangeWebApi.Controllers
             return _challengeService.StartChallenge(startRequestDto);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("getChallenge")]
         public object GetChallenge()
         {
             return _challengeService.GetTodoItems();
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("searchChallenge")]
         public object SearchChallenge(SearchRequestDto searchRequestDto)
         {
             return _challengeService.SearchTodoItems(searchRequestDto);
         }
 
-        [HttpDelete]
+        [HttpPost]
         [Route("deleteChallenge")]
         public object DeleteChallenge(DeleteRequestDto deleteRequestDto)
         {
