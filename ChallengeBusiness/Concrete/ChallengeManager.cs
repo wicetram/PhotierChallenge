@@ -232,10 +232,10 @@ namespace ChallangeWebApi.Business
             {
                 var zippedFileData = File.ReadAllBytes(completeRequestDto.FilePath);
 
-                var request = new RestRequest { Method = Method.Post };
+                var request = new RestRequest { Method = Method.Post, AlwaysMultipartFormData = true };
                 request.AddHeader("Authorization", $"Bearer {Token}");
-                request.AddParameter("finalCode", completeRequestDto.Code);
-                request.AddFile("zippedFile", zippedFileData, "ozer_uzunkaya.zip", "application/zip");
+                request.AddParameter("Code", completeRequestDto.Code);
+                request.AddFile("File", completeRequestDto.FilePath);
 
                 var client = new RestClient($"{BaseUrl}/complete");
                 var response = client.Execute(request);
